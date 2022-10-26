@@ -35,15 +35,46 @@ Untuk mempermudah mendapatkan informasi mengenai misi dari Handler, bantulah Loi
 
 ### Jawaban Nomor 2
 
+Dalam mengerjakan soal ini, pertama kami melakukan konfigurasi terhadap file `/etc/bind/named.conf.local` dengan menambahkan kode berikut ini menggunakan command `nano /etc/bind/named.conf.local`
+
+*masukin gambar*
+
+setelah membuat konfigurasi zone untuk `wise.ita03.com` kami membuat direktori baru yaitu `/etc/bind/jarkom` dengan command `mkdir /etc/bind/jarkom` lalu menambahkan konfigurasi berikut ini pada /etc/bind/jarkom/wise.ita03.com` 
+
+*masukin gambar*
+
+Pada file konfigurasi diatas kami mengatur domain menjadi wise.ita03.com lalu membuat CNAME `www` untuk `wise.ita03.com`
+
+###Testing
+
+
 ## Nomor 3
 Setelah itu ia juga ingin membuat subdomain eden.wise.yyy.com dengan alias www.eden.wise.yyy.com yang diatur DNS-nya di WISE dan mengarah ke Eden.
 
 ### Jawaban Nomor 3
 
+Kami menambahkan beberapa konfigurasi pada `/etc/bind/jarkom/wise.ita03.com` dengan command `nano /etc/bind/jarkom/wise.ita03.com` sebagai berikut
+
+*masukin gambar*
+
+Pada kode tersebut dapat dilihat bahwa kami menambahakan subdomain `eden` lalu membuat CNAME `www.eden` sebagai alias dari `eden.wise.ita03.com`
+
+*masukin gambar*
+
 ## Nomor 4
 Buat juga reverse domain untuk domain utama.
 
 ### Jawaban Nomor 4
+
+Untuk membuat reverse domain, kami melakukan konfigurasi tambahan pada `/etc/bind/named.conf.local` dengan bantuan command `cp /etc/bind/db.local /etc/bind/jarkom/3.41.10.in-addr.arpa` dan `nano /etc/bind/jarkom/3.41.10.in-addr.arpa` sehingga menjadi seperti berikut ini :
+
+*masukin gambar*
+
+###Testing
+
+Untuk memeriksa apakah konfigurasi sudah benar kami melakukan perintah berikut di client SSS:
+
+*masukin gambar*
 
 ## Nomor 5
 Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama.
