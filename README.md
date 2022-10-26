@@ -37,15 +37,15 @@ Untuk mempermudah mendapatkan informasi mengenai misi dari Handler, bantulah Loi
 
 Dalam mengerjakan soal ini, pertama kami melakukan konfigurasi terhadap file `/etc/bind/named.conf.local` dengan menambahkan kode berikut ini menggunakan command `nano /etc/bind/named.conf.local`
 
-*masukin gambar*
+![image](https://user-images.githubusercontent.com/90241858/197996014-57bf773a-5327-4ca6-9b21-a27355ab2e37.png)
 
-setelah membuat konfigurasi zone untuk `wise.ita03.com` kami membuat direktori baru yaitu `/etc/bind/wise` dengan command `mkdir /etc/bind/wise` lalu menambahkan konfigurasi berikut ini pada /etc/bind/wise/wise.ita03.com` 
 
-*masukin gambar*
+setelah membuat konfigurasi zone untuk `wise.ita03.com` kami membuat direktori baru yaitu `/etc/bind/wise` dengan command `mkdir /etc/bind/wise` lalu menambahkan konfigurasi berikut ini pada `/etc/bind/wise/wise.ita03.com` 
 
-Pada file konfigurasi diatas kami mengatur domain menjadi wise.ita03.com lalu membuat CNAME `www` untuk `wise.ita03.com`
+![image](https://user-images.githubusercontent.com/90241858/197995690-986127c9-7b99-4371-b337-16b4a8fa203f.png)
 
-###Testing
+
+Pada file konfigurasi diatas kami mengatur domain menjadi `wise.ita03.com` lalu membuat CNAME `www` untuk `wise.ita03.com`
 
 
 ## Nomor 3
@@ -55,11 +55,9 @@ Setelah itu ia juga ingin membuat subdomain eden.wise.yyy.com dengan alias www.e
 
 Kami menambahkan beberapa konfigurasi pada `/etc/bind/wise/wise.ita03.com` dengan command `nano /etc/bind/wise/wise.ita03.com` sebagai berikut
 
-*masukin gambar*
+![image](https://user-images.githubusercontent.com/90241858/197996474-bbca32a7-70f8-4e05-bf32-33d568c64eff.png)
 
 Pada kode tersebut dapat dilihat bahwa kami menambahakan subdomain `eden` lalu membuat CNAME `www.eden` sebagai alias dari `eden.wise.ita03.com`
-
-*masukin gambar*
 
 ## Nomor 4
 Buat juga reverse domain untuk domain utama.
@@ -68,7 +66,10 @@ Buat juga reverse domain untuk domain utama.
 
 Untuk membuat reverse domain, kami melakukan konfigurasi tambahan pada `/etc/bind/named.conf.local` dengan bantuan command `cp /etc/bind/db.local /etc/bind/jarkom/3.41.10.in-addr.arpa` dan `nano /etc/bind/jarkom/3.41.10.in-addr.arpa` sehingga menjadi seperti berikut ini :
 
-*masukin gambar*
+![image](https://user-images.githubusercontent.com/90241858/197996680-b6149cdc-8cf8-4b16-84b5-795f9232789b.png)
+
+![image](https://user-images.githubusercontent.com/90241858/197996566-bbbf4b44-ab88-4604-8667-e8955757010a.png)
+
 
 ###Testing
 
