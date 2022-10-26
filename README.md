@@ -39,7 +39,7 @@ Dalam mengerjakan soal ini, pertama kami melakukan konfigurasi terhadap file `/e
 
 *masukin gambar*
 
-setelah membuat konfigurasi zone untuk `wise.ita03.com` kami membuat direktori baru yaitu `/etc/bind/jarkom` dengan command `mkdir /etc/bind/jarkom` lalu menambahkan konfigurasi berikut ini pada /etc/bind/jarkom/wise.ita03.com` 
+setelah membuat konfigurasi zone untuk `wise.ita03.com` kami membuat direktori baru yaitu `/etc/bind/wise` dengan command `mkdir /etc/bind/wise` lalu menambahkan konfigurasi berikut ini pada /etc/bind/wise/wise.ita03.com` 
 
 *masukin gambar*
 
@@ -53,7 +53,7 @@ Setelah itu ia juga ingin membuat subdomain eden.wise.yyy.com dengan alias www.e
 
 ### Jawaban Nomor 3
 
-Kami menambahkan beberapa konfigurasi pada `/etc/bind/jarkom/wise.ita03.com` dengan command `nano /etc/bind/jarkom/wise.ita03.com` sebagai berikut
+Kami menambahkan beberapa konfigurasi pada `/etc/bind/wise/wise.ita03.com` dengan command `nano /etc/bind/wise/wise.ita03.com` sebagai berikut
 
 *masukin gambar*
 
