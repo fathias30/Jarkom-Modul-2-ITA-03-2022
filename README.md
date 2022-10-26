@@ -82,6 +82,22 @@ Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint seb
 
 ### Jawaban Nomor 5
 
+**Pada WISE**
+
+Untuk menjadikan Berlint sebagai DNS Slave, kami melakukan konfigurasi pada `/etc/bind/named.conf.local` menjadi sebagai berikut:
+
+![unknown](https://user-images.githubusercontent.com/90241942/197995514-787862da-d4d3-4b2b-ab0d-9e595033d474.png)
+
+Kami menambahkan `notify yes`, `also-notify { 10.41.2.2; };` serta `allow-transfer {10.41.2.2; };` untuk menjadikan Water 7 sebagai DNS Slave.
+
+**Pada Berlint**
+
+Pada Berlint pertama sekali menambahkan zone pada file `/etc/bind/named.conf.local` sebagai berikut:
+
+<img width="306" alt="image" src="https://user-images.githubusercontent.com/90241942/197996226-e18558a7-f315-4c7f-9ed4-511de1fc12fd.png">
+
+pada Berlint dapat dilihat bahwa type nya adalah slave dan master nya adalah WISE.
+
 ## Nomor 6
 Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operation yaitu operation.wise.yyy.com dengan alias www.operation.wise.yyy.com yang didelegasikan dari WISE ke Berlint dengan IP menuju ke Eden dalam folder operation 
 
