@@ -1,4 +1,4 @@
-# Jarkom-Modul-2-ITA-03-2022
+# Jarkom-Modul-2-ITA03-2022
 
 ## Anggota Kelompok
 1. Muhammad Jovan Adiwijaya Yanuarsyah (5027201025)
