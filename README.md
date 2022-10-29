@@ -200,14 +200,14 @@ Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain 
 
 ### Jawaban Nomor 7
 
-Pertama menambahkan zone untuk operation.wise.ITA03.com kemudian dikonfigurasikan seperti ini
+Pertama menambahkan zone untuk `operation.wise.ITA03.com` kemudian dikonfigurasikan seperti ini
 
 ![image](https://user-images.githubusercontent.com/90241942/198833133-dad3dae0-6f4e-467f-94b0-f8e708f138a4.png)
 
 ## Nomor 8 (Revisi)
 setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com
 
-## Nomor 9 (REvisi)
+## Nomor 9 (Revisi)
 Setelah itu, Loid juga membutuhkan agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home
 
 ### Jawaban Nomor 8 & 9
@@ -371,3 +371,98 @@ Untuk nomor 12, kami menambahkan konfigurasi baru ke dalam `/etc/apache2/sites-a
 -
 </VirtualHost>
 ```
+## Nomor 13 (Revisi)
+
+Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.eden.wise.yyy.com/public/js menjadi www.eden.wise.yyy.com/js
+
+### Jawaban Nomor 13 
+
+Menambahkan `alias \"/js\" \"/var/www/eden.wise.ITA03.com/public/js\"` pada `/etc/apache2/sites-available/eden.wise.ITA03.com.conf` dan testingnya seperti ini
+
+<img width="360" alt="image" src="https://user-images.githubusercontent.com/90241942/198834143-8fd6a6aa-755a-4985-8e9c-31ca06a482e0.png">
+
+## Nomor 14 (Revisi)
+
+Loid meminta agar www.strix.operation.wise.yyy.com hanya bisa diakses dengan port 15000 dan port 15500
+
+## Nomor 15 (Revisi)
+
+dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
+
+### Jawaban Nomor 14&15
+
+Membuat file konfigurasi untuk `strix.operation.wise.ITA03.com.conf`lalu mengisikan
+
+```
+<VirtualHost *:15000 *:15500>
+-
+-
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.ITA03.com
+        ServerName strix.operation.wise.ITA03.com
+        ServerAlias www.strix.operation.wise.ITA03.com
+        <Directory \"/var/www/strix.operation.wise.ITA03.com\">
+                AuthType Basic
+                AuthName \"Restricted Content\"
+                AuthUserFile /var/www/strix.operation.wise.ITA03
+                Require valid-user
+        </Directory>
+-
+-
+</VirtualHost>
+# vim: syntax=apache ts=4 sw=4 sts=4 sr 
+```
+kemudian menambahkan
+```
+Listen 15000
+Listen 15500
+```
+pada `/etc/apache2/ports.conf`
+
+Untuk nomor 15 menggunakan command `htpasswd -b -c /var/www/strix.operation.wise.ITA03 Twilight opStrix`
+
+## Nomor 16 (Revisi)
+
+dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke www.wise.yyy.com
+
+### Jawaban Nomor 16
+
+Menambahkan `redirect permanent / http://wise.ITA03.com` pada `/etc/apache2/sites-available/000-default.conf`
+
+Pada testingnya akan muncul seperti ini
+
+<img width="277" alt="image" src="https://user-images.githubusercontent.com/90241942/198834674-e287e5d7-3ae7-4a96-b770-bf090c41272f.png">
+
+## Nomor 17 (Revisi)
+
+Karena website www.eden.wise.yyy.com semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
+
+### Jawaban Nomor 17
+
+Perlu ditambahkan `.htaccess` pada `/var/www/eden.wise.ITA03.com` dan isinya sebagai berikut:
+```
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/public/images/eden.png$
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteRule ^(.*)eden(.*)$ /public/images/eden.png [R=301,L]
+```
+dan pada `/etc/apache2/sites-available/eden.wise.ITA03.com` sebagai berikut:
+```
+         <Directory /var/www/eden.wise.ITA03.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+```
+Jika kita memasukan url yang ada substring Eden, maka akan diarahkan ke eden.png dan akan diberikan pilihan download atau cancel
+
+Untuk browsenya menggunakan
+`lynx eden.wise.ITA03.com/edening.png`
+
+<img width="248" alt="image" src="https://user-images.githubusercontent.com/90241942/198835099-494d4f87-1ae7-472f-b9aa-2512cf252f06.png">
+
+<img width="231" alt="image" src="https://user-images.githubusercontent.com/90241942/198835130-63c3df41-c1b8-4f92-b50c-caf9c9ac1610.png">
+
+## Kendala Pengerjaan
+
+Kelompok kami hanya berhasil mengerjakan sampai nomor 7, sisa laporan kami kerjakan setelah revisi.
