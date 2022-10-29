@@ -20,15 +20,77 @@ Kami membuat topologi sesuai dengan soal lalu melakukan konfigurasi untuk setiap
 
 **Konfigurasi Ostania**
 
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.41.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 10.41.2.1
+	netmask 255.255.255.0
+
+    
+auto eth3
+iface eth2 inet static
+	address 10.41.3.1
+	netmask 255.255.255.0
+```
+
 **Konfigurasi SSS**
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.41.1.2
+	netmask 255.255.255.0
+	gateway 10.41.1.1
+```
 
 **Konfigurasi Garden**
 
+```
+auto eth0
+iface eth0 inet static
+	address 10.41.1.3
+	netmask 255.255.255.0
+	gateway 10.41.1.1
+```
+
 **Konfigurasi WISE**
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.41.3.2
+	netmask 255.255.255.0
+	gateway 10.41.3.1
+```
 
 **Konfigurasi Berlint**
 
+```
+auto eth0
+iface eth0 inet static
+	address 10.41.2.2
+	netmask 255.255.255.0
+	gateway 10.41.2.1
+```
+
 **Konfigurasi Eden**
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.41.2.3
+	netmask 255.255.255.0
+	gateway 10.41.2.1
+```
+
 
 ## Nomor 2
 Untuk mempermudah mendapatkan informasi mengenai misi dari Handler, bantulah Loid membuat website utama dengan akses wise.yyy.com dengan alias www.wise.yyy.com pada folder wise.
@@ -107,3 +169,172 @@ Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operat
 Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses strix.operation.wise.yyy.com dengan alias www.strix.operation.wise.yyy.com yang mengarah ke Eden.
 
 ### Jawaban Nomor 7
+
+
+## Nomor 8 (Revisi)
+setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com
+
+## Nomor 9 (REvisi)
+Setelah itu, Loid juga membutuhkan agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home
+
+### Jawaban Nomor 8 & 9
+Untuk mengerjakan soal ini, kami perlu menginstall apache2 terlebih dahulu dengan `apt-get install libapache2-mod-php7.0 -y` pada node eden
+dilanjutkan dengan tambahkan file wise.ita03.com.conf pada /etc/apache2/sites-available sehingga konfigurasinya akan menjadi sebagai berikut:
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/wise.ita03.com
+        ServerName wise.ita03.com
+        ServerAlias www.wise.ita03.com
+        
+        <Directory /var/www/wise.ita03.com/>
+                Options +Indexes
+        </Directory>
+ 
+        Alias \"/home\" \"/var/www/wise.ita03.com/index.php/home\"
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+```
+Pada file konfigurasi tersebut document root sudah diarahkan ke `/var/www/wise.yyy.com` dan ditambahkan alias agar url `www.wise.yyy.com/index.php/home` dapat menjadi `menjadi www.wise.yyy.com/home \`
+
+Setelah itu, kita akan membuat sebuah folder bernama `wise.ita03.com` di dalam `/var/www/` dan mendownload isi dari `wise.ita03.com` dengan command sebagai berikut:
+```
+wget "https://drive.google.com/uc?id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV&export=download" -O eden.wise.zip
+```
+```
+unzip eden.wise.zip
+```
+```
+mv eden.wise/* /var/www/eden.wise.ITB10.com
+```
+
+### Testing
+
+sebelum melakukan testing, kita perlu mengganti IP `wise.ita03.com` pada node wise dan juga pada reverse domainnya
+```
+\$TTL    604800
+@       IN      SOA     wise.ita03.com. root.wise.ita03.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      wise.ita03.com.
+@             IN      A       10.41.3.2 ; IP WISE
+@             IN      AAAA    ::1
+www           IN      CNAME   wise.ita03.com.
+eden          IN      A       10.41.2.3 ; IP Eden
+www.eden      IN      CNAME   eden.wise.ita03.com
+ns1           IN      A       10.41.2.2 ; IP Berlint
+operation     IN      NS      ns1
+www.operation IN      CNAME   wise.ita03.com
+```
+
+```
+\$TTL    604800
+@       IN      SOA     wise.ita03.com.com. root.wise.ita03.com.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+3.41.10.in-addr.arpa.   IN      NS      wise.ita03.com.
+2                       IN      PTR     wise.ita03.com.
+```
+
+Setelah itu, kami *enable* `wise.ita03.com` dengan command berikut:
+```
+a2ensite wise.ita03.com
+```
+
+Lalu, akan kami *reload* apache2-nya dengan command
+```
+service apache2 reload
+```
+Selanjutnya, kami install lynx pada node eden jika sudah berhasil akan muncul tampilan seperti dibawah:
+
+![image](https://user-images.githubusercontent.com/90241858/198820064-fdb6270a-d9cb-4dbc-b865-587e4d244558.png)
+
+
+## Nomor 10 (Revisi)
+Setelah itu, pada subdomain www.eden.wise.yyy.com, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com
+
+## Nomor 11 (Revisi)
+Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja
+
+### Jawaban Nomor 10&11
+Pertama-tama, kami membuat folder `eden.wise.ita03.com` lalu mendownload file dan mengunzip file tersebut ke dalam folder `eden.wise.ita03.com` menggunakan command berikut:
+Download:
+```
+wget "https://drive.google.com/uc?id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV&export=download" -O eden.wise.zip
+```
+Unzip:
+```
+unzip eden.wise.zip
+```
+Memindahkan file:
+```
+mv eden.wise/* /var/www/eden.wise.ITB10.com
+```
+
+Setelah itu, kami membuat file `eden.wise.ita03.com.conf` pada `/etc/apache2/sites-available ` yang berisi konfigurasi berikut:
+```
+<VirtualHost *:80>
+-
+-
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.ita03.com
+        ServerName eden.wise.ita03.com
+        ServerAlias www.eden.wise.ita03.com
+       
+        <Directory /var/www/eden.wise.ita03.com/public>
+                Options +Indexes
+        </Directory>
+-
+-
+</VirtualHost>
+```
+
+## Nomor 12 (Revisi)
+Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache
+
+### Jawaban Nomor 12
+Untuk nomor 12, kami menambahkan konfigurasi baru ke dalam `/etc/apache2/sites-available/eden.wise.ita03.com.conf` seperti berikut:
+```
+<VirtualHost *:80>
+-
+-
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.ita03.com
+        ServerName eden.wise.ita03.com
+        ServerAlias www.eden.wise.ita03.com
+       
+        <Directory /var/www/eden.wise.ita03.com/public>
+                Options +Indexes
+        </Directory>
+-
+-
+</VirtualHost>
+```
