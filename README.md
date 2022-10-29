@@ -258,7 +258,7 @@ wget "https://drive.google.com/uc?id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV&export=do
 unzip eden.wise.zip
 ```
 ```
-mv eden.wise/* /var/www/eden.wise.ITB10.com
+mv eden.wise/* /var/www/eden.wise.ITA03.com
 ```
 
 ### Testing
@@ -329,7 +329,7 @@ unzip eden.wise.zip
 ```
 Memindahkan file:
 ```
-mv eden.wise/* /var/www/eden.wise.ITB10.com
+mv eden.wise/* /var/www/eden.wise.ITA03.com
 ```
 
 Setelah itu, kami membuat file `eden.wise.ita03.com.conf` pada `/etc/apache2/sites-available ` yang berisi konfigurasi berikut:
