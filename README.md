@@ -165,11 +165,44 @@ Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operat
 
 ### Jawaban Nomor 6
 
+**Pada Wise**
+
+Pada Wise kita mengonfigurasikan wise.ITA03.com untuk mendelegasikan Wise ke Berlin
+
+Menambahkan ns1 ke alamat Berlint
+
+![image](https://user-images.githubusercontent.com/90241942/198831860-adc39c15-453f-4959-b029-9ed22d74be5e.png)
+
+Menambahkan konfigurasi ke `/etc/bind/named.conf.options`
+
+![image](https://user-images.githubusercontent.com/90241942/198831917-e06a60c2-9242-4d9f-9e0b-517837a4b906.png)
+
+Pada konfigurasi di atas kita menambahkan `allow-query{any;};`
+
+**Pada Berlint**
+
+Menambahkan konfigurasi ke `/etc/bind/named.conf.options`
+
+![image](https://user-images.githubusercontent.com/90241942/198831932-d30796ce-aada-4007-8292-d5ad21f2f326.png)
+
+Pada konfigurasi di atas kita menambahkan `allow-query{any;};`
+
+Menambahkan zone untuk alamat operation.wise.ita03.com dengan type master dan folder konfigurasinya di folder operation
+
+![image](https://user-images.githubusercontent.com/90241942/198831939-2f41a05d-dcdc-4b6c-9f67-ef1712846b45.png)
+
+Dapat dilihat bahwa domain  akan mengarah ke alamat Eden
+
+![image](https://user-images.githubusercontent.com/90241942/198833106-ed0f9994-0fd5-465d-8cc0-022fb3abbd60.png)
+
 ## Nomor 7
 Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses strix.operation.wise.yyy.com dengan alias www.strix.operation.wise.yyy.com yang mengarah ke Eden.
 
 ### Jawaban Nomor 7
 
+Pertama menambahkan zone untuk operation.wise.ITA03.com kemudian dikonfigurasikan seperti ini
+
+![image](https://user-images.githubusercontent.com/90241942/198833133-dad3dae0-6f4e-467f-94b0-f8e708f138a4.png)
 
 ## Nomor 8 (Revisi)
 setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com
